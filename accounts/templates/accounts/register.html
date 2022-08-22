@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  {% include 'navbar.html' %}
+  <section class="container">
+    <h1 class="large text-primary">Sign Up</h1>
+    <p class="lead">
+      <i class="fas fa-user"></i> Create Your Account
+    </p>
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>Error!</strong> {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+    <form action="{% url 'register' %}" method="post" class="form">
+      {% csrf_token %}
+      {% for item in form %}
+        <div class="form-group">{{ item.label }} {{ item }}</div>
+        <small class="form-text">{{ item.help_text }}</small>
+        <ul>
+          {% for error in item.errors %}<li class="alert alert-danger">{{ error }}</li>{% endfor %}
+        </ul>
+      {% endfor %}
+      <input type="submit" value="Register" class="btn btn-primary" />
+    </form>
+    <p class="my-1">
+      Already have an account? <a href="{% url 'login' %}">Sign In</a>
+    </p>
+  </section>
+{% endblock content %}

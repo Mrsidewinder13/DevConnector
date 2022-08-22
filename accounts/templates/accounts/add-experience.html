@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  {% include 'navbar.html' %}
+  {% include '_messages.html' %}
+  <section class="container">
+    <h1 class="large text-primary">Add An Experience</h1>
+    <p class="lead">
+      <i class="fas fa-code-branch"></i> Add any developer/programming
+    positions that you have had in the past
+  </p>
+  <form  class="form" method="post" >
+    {% csrf_token %}
+    {% for item in form %}
+      <div class="form-group">
+        {{ item.label }}
+        {{ item }}
+        <small class="form-text">{{ item.help_text }}</small>
+        {% for error in item.errors %}{{ error }}{% endfor %}
+      </div>
+    {% endfor %}
+    <input type="submit" class="btn btn-primary my-1" />
+    <a class="btn my-1" href="{% url 'dashboard' %}" >Go Back</a>
+  </form>
+</section>
+{% endblock content %}

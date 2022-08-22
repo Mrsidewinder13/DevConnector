@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+
+    <section class="container">
+      <a href="posts.html" class="btn">Back To Posts</a>
+      <div class="post bg-white p-1 my-1">
+        <div>
+          <a href="profile.html">
+            <img
+              class="round-img"
+              src={{post.author.picture.url}}
+              alt=""
+            />
+            <h4> {{post.author.get_full_name}} </h4>
+           
+            <h1>{{post.author.username}}</h1>
+           
+          </a>
+        </div>
+        <div>
+          <h4>{{post.title}}</h4>
+          <p class="my-1">
+            {{post.body}}
+          </p>
+        </div>
+      </div>
+
+      <div class="post-form">
+        <div class="post-form-header bg-primary">
+          <h3>Leave A Comment</h3>
+        </div>
+        <form class="form my-1 comment-form" method="post" >
+          {% csrf_token %}
+          {% comment %} <textarea
+            name="comment_body"
+            cols="30"
+            rows="5"
+            placeholder="Comment on this post"
+          ></textarea> {% endcomment %}
+          {{form}}
+          <input type="submit" class="btn btn-dark my-1" value="Submit" />
+        </form>
+      </div>
+
+      
+      {% for comment in comments %}
+      <div class="posts">
+        <div class="post bg-white p-1 my-1">
+          <div>
+            <a href="profile.html">
+              <img
+                class="round-img"
+                src="{{comment.author.picture.url}}"
+                alt=""
+              />
+              <h4>{{comment.author.username}}</h4>
+            </a>
+          </div>
+          <div>
+            <p class="my-1">
+              {{comment.body}}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+
+        
+      </div>
+    </section>
+
+    {% endblock content %}
